@@ -27,6 +27,26 @@ class LunchBackendViewsTestCase(unittest.TestCase):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
 
+    def test_brawse_photos_view(self):
+        """
+        Test main page view.
+        """
+        resp = self.client.get('/photos')
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('Next photo', str(resp.data))
+        self.assertIn('Previous photo', str(resp.data))
+        self.assertIn('Download', str(resp.data))
+
+    def test_make_photos_view(self):
+        """
+        Test main page view.
+        """
+        resp = self.client.get('/camera')
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn('Capture a photo', str(resp.data))
+        self.assertIn('Change aperture', str(resp.data))
+        self.assertIn('Change time', str(resp.data))
+        self.assertIn('Change ISO', str(resp.data))
 
 class LunchCameraTestCase(unittest.TestCase):
     """
