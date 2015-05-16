@@ -1,5 +1,4 @@
-from flask import Flask
-import piggyphoto
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -7,9 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    C = piggyphoto.camera()
-    print(C.abilities)
-    return 'Hello World!'
+    to_jest_fajna_zmienna = "ala ma aids"
+    return render_template("index.html", zmienna=to_jest_fajna_zmienna)
 
 
 if __name__ == '__main__':
