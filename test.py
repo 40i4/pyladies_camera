@@ -6,47 +6,8 @@ Unit tests.
 
 import unittest
 
-from main import app
+from main import app, cpu_choice
 
-
-class LunchCameraAppViewsTestCase(unittest.TestCase):
-    """
-    Views tests.
-    """
-
-    def setUp(self):
-        """
-        Before each test, set up a environment.
-        """
-        self.client = app.test_client()
-
-    def test_mainpage_view(self):
-        """
-        Test main page view.
-        """
-        resp = self.client.get('/')
-        self.assertEqual(resp.status_code, 200)
-
-    def test_browse_photos_view(self):
-        """
-        Test main page view.
-        """
-        resp = self.client.get('/photos')
-        self.assertEqual(resp.status_code, 200)
-        self.assertIn('Next photo', str(resp.data))
-        self.assertIn('Previous photo', str(resp.data))
-        self.assertIn('Download', str(resp.data))
-
-    def test_make_photos_view(self):
-        """
-        Test main page view.
-        """
-        resp = self.client.get('/camera')
-        self.assertEqual(resp.status_code, 200)
-        self.assertIn('Capture a photo', str(resp.data))
-        self.assertIn('Change aperture', str(resp.data))
-        self.assertIn('Change time', str(resp.data))
-        self.assertIn('Change ISO', str(resp.data))
 
 class LunchGameAppViewsTestCase(unittest.TestCase):
     """
@@ -66,7 +27,7 @@ class LunchGameAppViewsTestCase(unittest.TestCase):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
 
-    def test_brawse_photos_view(self):
+    def test_play(self):
         """
         Test main page view.
         """
@@ -78,16 +39,13 @@ class LunchGameAppViewsTestCase(unittest.TestCase):
         self.assertIn('spock', str(resp.data))
         self.assertIn('python', str(resp.data))
 
-    def test_make_photos_view(self):
+    def test_cpu(self):
         """
         Test main page view.
         """
-        resp = self.client.get('/cpu_choice')
-        self.assertEqual(resp.status_code, 200)
-        resp_2 = self.client.get('/cpu_choice')
-        self.assertEqual(resp.status_code, 200)
-        resp_3 = self.client.get('/cpu_choice')
-        self.assertEqual(resp.status_code, 200)
+        resp = cpu_choice()
+        resp_2 = cpu_choice()
+        resp_3 = cpu_choice()
         assert resp != resp_2 or resp_2 != resp_3 or resp_3 != resp
 
 
@@ -98,7 +56,6 @@ def suite():
     Default test suite.
     """
     base_suite = unittest.TestSuite()
-    base_suite.addTest(unittest.makeSuite(LunchCameraAppViewsTestCase))
     base_suite.addTest(unittest.makeSuite(LunchGameAppViewsTestCase))
     return base_suite
 
